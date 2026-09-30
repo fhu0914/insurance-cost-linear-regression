@@ -190,19 +190,21 @@ insurance-cost-linear-regression/
 │
 ├── data/
 │   ├── insurance-premium-prediction/
-│   │   └── insurance.csv
-│   └── model_comparison_bmi_expenses.png
+│   │   └── insurance.csv                   # dataset (committed, no download needed)
+│   └── model_comparison_bmi_expenses.png   # output of 04
 │
 ├── reports/
-│   └── assignment_results.csv
+│   └── assignment_results.csv              # output of the two-feature script
 │
-├── 01_simple_linear.py
-├── 02_ols_normal_equation.py
-├── 03_gradient_descent.py
-├── 04_compare_models_visual.py
-├── two_feature_insurance_regression.py
+├── 01_simple_linear.py                     # course material — data exploration
+├── 02_ols_normal_equation.py               # course material — analytical OLS
+├── 03_gradient_descent.py                  # course material — iterative OLS
+├── 04_compare_models_visual.py             # course material — method comparison
+│
+├── two_feature_insurance_regression.py     # my extension — BMI + age model
+├── analysis_memo.md                        # my written interpretation
+│
 ├── linear_regression_lab.ipynb
-├── analysis_memo.md
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -387,6 +389,22 @@ python3 -m pip install -r requirements.txt
 
 Wait until installation finishes.
 
+### What Each Script Does
+
+| Script | Purpose | Main Output |
+|---|---|---|
+| `01_simple_linear.py` | Explore the data: shape, summary statistics, correlations with expenses | Correlation values and text-based histograms |
+| `02_ols_normal_equation.py` | Train a single-feature model (BMI) analytically | w0, w1, MSE, R² on the full dataset |
+| `03_gradient_descent.py` | Train the same model iteratively, with feature standardization | Loss curve across epochs, final weights in original units |
+| `04_compare_models_visual.py` | Compare both methods on a train/test split | Metrics table, scatter plot saved to `data/` |
+| `two_feature_insurance_regression.py` | **My extension:** add `age` as a second feature | Comparison table saved to `reports/assignment_results.csv` |
+
+Scripts 01–04 come from the course materials and build up the foundation.
+The fifth script is my own extension and is where the assignment deliverable
+lives. Each script prints extensive explanatory output by design — this is a
+teaching repository, so the terminal output walks through the reasoning rather
+than just reporting numbers.
+
 ---
 
 ## Step 8 — Run the Python Scripts
@@ -427,7 +445,11 @@ If the terminal returns to the command prompt without an error, the script compl
 
 ---
 
-## Step 9 — Open the Jupyter Notebook
+## Step 9 — Open the Jupyter Notebook (Optional)
+
+This step is optional. The notebook contains the same analysis in an interactive
+format for readers who prefer notebooks over scripts. Everything required to
+reproduce the results has already run in Step 8.
 
 In Visual Studio Code, open:
 
