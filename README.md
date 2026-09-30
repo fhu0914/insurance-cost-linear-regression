@@ -155,6 +155,8 @@ Both the Normal Equation and Gradient Descent produced nearly identical coeffici
 
 The BMI-only baseline had an R² of 0.0394, so adding age improved explanatory power by about 7.78 percentage points.
 
+The 0.0394 baseline is computed on the full dataset without a train/test split, to match the reference implementation in `02_ols_normal_equation.py`. The 0.0406 and 0.0226 figures reported earlier come from the train/test split used in `04_compare_models_visual.py`.
+
 The detailed comparison results are exported to:
 
 ```text
@@ -191,11 +193,16 @@ insurance-cost-linear-regression/
 │   │   └── insurance.csv
 │   └── model_comparison_bmi_expenses.png
 │
+├── reports/
+│   └── assignment_results.csv
+│
 ├── 01_simple_linear.py
 ├── 02_ols_normal_equation.py
 ├── 03_gradient_descent.py
 ├── 04_compare_models_visual.py
+├── two_feature_insurance_regression.py
 ├── linear_regression_lab.ipynb
+├── analysis_memo.md
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -393,6 +400,7 @@ python 01_simple_linear.py
 python 02_ols_normal_equation.py
 python 03_gradient_descent.py
 python 04_compare_models_visual.py
+python two_feature_insurance_regression.py
 ```
 
 ### macOS
@@ -402,6 +410,7 @@ python3 01_simple_linear.py
 python3 02_ols_normal_equation.py
 python3 03_gradient_descent.py
 python3 04_compare_models_visual.py
+python3 two_feature_insurance_regression.py
 ```
 
 The scripts follow this workflow:
@@ -411,6 +420,7 @@ The scripts follow this workflow:
 02 → Fit linear regression with the Normal Equation
 03 → Fit linear regression with Gradient Descent
 04 → Compare the two methods
+two_feature_insurance_regression.py → Extend to a two-feature model (BMI + age)
 ```
 
 If the terminal returns to the command prompt without an error, the script completed successfully.
@@ -621,7 +631,6 @@ Technical results should also be translated into language that non-technical sta
 
 Future extensions could include:
 
-- Add age as a predictor
 - Add smoking status
 - Add region
 - Compare single-feature and multi-feature regression

@@ -6,8 +6,6 @@ import shutil
 from collections import Counter
 from pathlib import Path
 
-import kagglehub
-
 DATASET_ID = "noordeen/insurance-premium-prediction"
 PROJECT_ROOT = Path(__file__).resolve().parent
 PROJECT_DATA_DIR = PROJECT_ROOT / "data" / "insurance-premium-prediction"
@@ -15,9 +13,22 @@ CSV_PATH = PROJECT_DATA_DIR / "insurance.csv"
 
 
 def ensure_local_dataset() -> Path:
-	"""Download from kagglehub cache and keep a project-local copy."""
-	cached_path = Path(kagglehub.dataset_download(DATASET_ID))
+	"""Use the copy committed to this repository; download only if missing."""
+	if CSV_PATH.exists():
+		print(f"[+] Using dataset already in repository: {CSV_PATH}")
+		return PROJECT_DATA_DIR
 
+	print("[*] Local dataset not found. Attempting download from Kaggle...")
+	try:
+		import kagglehub
+	except ImportError:
+		raise SystemExit(
+			"Dataset missing and kagglehub is not installed.\n"
+			f"The CSV should already be in this repository at:\n  {CSV_PATH}\n"
+			"Please re-clone the repository."
+		)
+
+	cached_path = Path(kagglehub.dataset_download(DATASET_ID))
 	if PROJECT_DATA_DIR.exists():
 		shutil.rmtree(PROJECT_DATA_DIR)
 	shutil.copytree(cached_path, PROJECT_DATA_DIR)
