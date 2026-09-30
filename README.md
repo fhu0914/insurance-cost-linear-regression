@@ -1,13 +1,13 @@
 # Insurance Cost Prediction with Linear Regression
 
-A reproducible machine learning project that uses real-world insurance data to explore, train, evaluate, and compare linear regression models in Python.
+A reproducible machine learning project using real-world insurance data to explore, train, evaluate, and compare linear regression models in Python.
 
 This project compares two approaches for fitting the same linear regression model:
 
 - Normal Equation — a direct analytical solution
 - Gradient Descent — an iterative optimization method
 
-The goal is not only to run a regression model, but also to understand how the model is trained, how different training methods compare, and how to interpret model performance for a non-technical audience.
+The goal is not only to run linear regression, but also to understand how the model is trained, how different training strategies compare, and how to interpret model performance for a non-technical audience.
 
 ---
 
@@ -15,18 +15,18 @@ The goal is not only to run a regression model, but also to understand how the m
 
 This project uses an insurance dataset to study the relationship between BMI and medical expenses.
 
-The workflow covers:
+The workflow includes:
 
 1. Data inspection and exploratory analysis
 2. Correlation analysis
 3. Simple linear regression
-4. Training with the Normal Equation
-5. Training with Gradient Descent
+4. Normal Equation training
+5. Gradient Descent training
 6. Model evaluation
 7. Comparison of both training strategies
-8. Business interpretation of the results
+8. Business interpretation
 
-The project includes both Python scripts and a Jupyter Notebook so the analysis can be reviewed step by step.
+The project includes Python scripts and a Jupyter Notebook so the analysis can be reviewed step by step.
 
 ---
 
@@ -34,9 +34,9 @@ The project includes both Python scripts and a Jupyter Notebook so the analysis 
 
 Can BMI help explain or predict medical expenses?
 
-The analysis uses BMI as the main input feature and medical expenses as the target variable.
+BMI is used as the main input feature, and medical expenses are used as the target variable.
 
-This is intentionally a simple one-feature model so that the training process can be understood clearly before moving to more complex models.
+This is intentionally a simple one-feature model so the training process can be understood clearly before moving to more complex models.
 
 ---
 
@@ -44,122 +44,109 @@ This is intentionally a simple one-feature model so that the training process ca
 
 ### Pearson Correlation
 
-Pearson correlation is used as an exploratory step to measure the direction and strength of the linear relationship between BMI and medical expenses.
+Pearson correlation is used as an exploratory step to examine the direction and strength of the linear relationship between BMI and medical expenses.
 
-Correlation describes association, not causation.
+Correlation shows association, not causation.
 
 ### Simple Linear Regression
 
 The model has the form:
 
-predicted expenses = w0 + w1 × BMI
+```text
+Predicted Expenses = w0 + w1 × BMI
+```
 
 Where:
 
-- w0 = intercept
-- w1 = slope
+- `w0` = intercept
+- `w1` = slope
 - BMI = input feature
-- predicted expenses = model prediction
+- Predicted Expenses = model prediction
 
 ### Normal Equation
 
-The Normal Equation calculates the regression coefficients directly using a mathematical closed-form solution.
+The Normal Equation calculates the regression coefficients directly.
 
 It does not require:
 
-- a learning rate
+- learning rate
 - epochs
 - repeated weight updates
 
-This approach is useful when the number of features is relatively small.
+It is convenient when the number of features is relatively small.
 
 ### Gradient Descent
 
-Gradient Descent starts with initial values for the model weights and repeatedly updates them in the direction that reduces prediction error.
+Gradient Descent begins with initial model weights and repeatedly updates them to reduce prediction error.
 
 The basic process is:
 
-Predict → Calculate Error → Calculate Gradient → Update Weights → Repeat
+```text
+Predict
+↓
+Calculate Error
+↓
+Calculate Gradients
+↓
+Update Weights
+↓
+Repeat
+```
 
 The learning rate controls the size of each update step.
 
 ### Why Compare Both?
 
-Both approaches are trying to solve the same linear regression problem.
+Both approaches solve the same linear regression problem.
 
 The Normal Equation solves directly for the coefficients, while Gradient Descent approaches the solution iteratively.
 
-Comparing them helps demonstrate that different training strategies can produce very similar fitted models.
-
 ---
 
-## Model Evaluation
-
-The project uses several evaluation metrics.
-
-### Residual
-
-Residual = Actual Value − Predicted Value
-
-A residual shows how far one individual prediction is from the observed value.
-
-### MSE
-
-Mean Squared Error measures the average squared prediction error.
-
-Lower MSE indicates smaller prediction errors when comparing models on the same target and dataset.
-
-### RMSE
-
-Root Mean Squared Error converts MSE back into the original target units, making the error easier to interpret.
-
-### MAE
-
-Mean Absolute Error measures the average absolute difference between actual and predicted values.
-
-### R²
-
-R² measures how much of the observed variation in the target is explained by the fitted model.
-
-A low R² does not necessarily mean the optimization algorithm failed. It may mean that the selected feature contains limited predictive information.
-
----
 ## Results
 
 Using the same training data, the Normal Equation and Gradient Descent produced the same fitted regression model:
 
-**Predicted Expenses = 1216.99 + 400.61 × BMI**
+```text
+Predicted Expenses = 1216.99 + 400.61 × BMI
+```
 
-Both methods produced the same evaluation results:
+Model evaluation results:
 
-- Train MSE: 143,772,403.04
-- Test MSE: 129,028,708.19
-- Train RMSE: $11,990.51
-- Test RMSE: $11,359.08
-- Train MAE: $9,339.00
-- Test MAE: $8,924.52
-- Train R²: 0.0406
-- Test R²: 0.0226
+| Metric | Normal Equation | Gradient Descent |
+|---|---:|---:|
+| Train MSE | 143,772,403.04 | 143,772,403.04 |
+| Test MSE | 129,028,708.19 | 129,028,708.19 |
+| Train RMSE | $11,990.51 | $11,990.51 |
+| Test RMSE | $11,359.08 | $11,359.08 |
+| Train MAE | $9,339.00 | $9,339.00 |
+| Test MAE | $8,924.52 | $8,924.52 |
+| Train R² | 0.0406 | 0.0406 |
+| Test R² | 0.0226 | 0.0226 |
 
 The slope indicates that a one-unit increase in BMI is associated with an increase of approximately $400.61 in predicted medical expenses.
 
-However, the test R² of 0.0226 shows that BMI alone explains only about 2.26% of the observed variation in medical expenses.
+The test R² of 0.0226 means that BMI alone explains only about 2.26% of the observed variation in medical expenses.
 
-Gradient Descent reduced the loss substantially and converged to the same coefficients as the Normal Equation, demonstrating that both training strategies can reach the same least-squares solution.
+Gradient Descent reduced the loss substantially and converged to the same coefficients as the Normal Equation.
 
-The model performs slightly better than a naive mean-prediction baseline, but its predictive power remains limited. Additional features such as age, smoking status, and region would likely be necessary for a stronger predictive model.
+This shows that both training strategies can reach the same least-squares solution.
 
+The model performs slightly better than a simple mean-prediction baseline, but its predictive power remains limited.
+
+Additional predictors such as age, smoking status, and region may improve model performance.
+
+---
 
 ## Key Analytical Takeaways
 
-This project demonstrates several important machine learning lessons:
-
 - Correlation should be examined before fitting a linear model.
 - Correlation does not prove causation.
-- The Normal Equation and Gradient Descent can solve the same regression problem using different approaches.
-- Feature standardization helps Gradient Descent train more smoothly.
-- A model can converge successfully while still having limited predictive power.
-- Model performance should be interpreted in the context of the business problem rather than judged from one metric alone.
+- Normal Equation and Gradient Descent can solve the same regression problem using different approaches.
+- Feature standardization improves Gradient Descent stability.
+- Successful optimization does not automatically mean strong predictive performance.
+- Model performance should be interpreted in the context of the business problem.
+- BMI alone is not sufficient for strong medical-expense prediction.
 
 ---
 
@@ -181,3 +168,479 @@ insurance-cost-linear-regression/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
+```
+
+---
+
+# Setup Instructions for Beginners
+
+These instructions assume that the user has little or no previous experience with Python, Git, or Visual Studio Code.
+
+Instructions are provided for both Windows and macOS.
+
+---
+
+## Step 1 — Install Python
+
+Go to:
+
+https://www.python.org/downloads/
+
+Download Python 3.10 or newer.
+
+### Windows
+
+During installation, make sure to select:
+
+```text
+Add Python to PATH
+```
+
+Then complete the installation.
+
+### macOS
+
+Download and install the current Python 3 version from the Python website.
+
+---
+
+## Step 2 — Install Visual Studio Code
+
+Go to:
+
+https://code.visualstudio.com/
+
+Download and install Visual Studio Code.
+
+Use the default installation options.
+
+---
+
+## Step 3 — Install Git
+
+Go to:
+
+https://git-scm.com/downloads
+
+Download and install Git.
+
+Use the default installation options.
+
+To confirm Git is installed, open a terminal and type:
+
+```bash
+git --version
+```
+
+You should see a Git version number.
+
+---
+
+## Step 4 — Install VS Code Extensions
+
+Open Visual Studio Code.
+
+Click the Extensions icon on the left side.
+
+Search for and install:
+
+1. Python — Microsoft
+2. Jupyter — Microsoft
+
+---
+
+## Step 5 — Download This Project
+
+Open Visual Studio Code.
+
+From the top menu, choose:
+
+```text
+Terminal → New Terminal
+```
+
+Copy and run:
+
+```bash
+git clone https://github.com/fhu0914/insurance-cost-linear-regression.git
+cd insurance-cost-linear-regression
+```
+
+The first command downloads the project.
+
+The second command moves the terminal into the project folder.
+
+---
+
+## Step 6 — Create a Virtual Environment
+
+A virtual environment keeps this project's Python packages separate from other projects.
+
+### Windows PowerShell
+
+Run:
+
+```powershell
+python -m venv .venv
+```
+
+Then activate it:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+If Windows displays an error saying scripts are disabled, run:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+Then activate the environment again:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+When activation succeeds, the terminal should begin with:
+
+```text
+(.venv)
+```
+
+### macOS
+
+Run:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+When activation succeeds, the terminal should begin with:
+
+```text
+(.venv)
+```
+
+---
+
+## Step 7 — Install Required Packages
+
+Make sure the virtual environment is activated.
+
+### Windows
+
+Run:
+
+```powershell
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+### macOS
+
+Run:
+
+```bash
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
+```
+
+Wait until installation finishes.
+
+---
+
+## Step 8 — Run the Python Scripts
+
+Run the scripts in this order.
+
+### Windows
+
+```powershell
+python 01_simple_linear.py
+python 02_ols_normal_equation.py
+python 03_gradient_descent.py
+python 04_compare_models_visual.py
+```
+
+### macOS
+
+```bash
+python3 01_simple_linear.py
+python3 02_ols_normal_equation.py
+python3 03_gradient_descent.py
+python3 04_compare_models_visual.py
+```
+
+The scripts follow this workflow:
+
+```text
+01 → Explore and understand the data
+02 → Fit linear regression with the Normal Equation
+03 → Fit linear regression with Gradient Descent
+04 → Compare the two methods
+```
+
+If the terminal returns to the command prompt without an error, the script completed successfully.
+
+---
+
+## Step 9 — Open the Jupyter Notebook
+
+In Visual Studio Code, open:
+
+```text
+linear_regression_lab.ipynb
+```
+
+Look at the upper-right corner of the notebook.
+
+Click:
+
+```text
+Select Kernel
+```
+
+Select the Python interpreter located inside:
+
+```text
+.venv
+```
+
+Then click:
+
+```text
+Run All
+```
+
+You may also run the notebook cells one at a time from top to bottom.
+
+---
+
+## Expected Workflow
+
+```text
+Load Data
+↓
+Inspect Data
+↓
+Correlation Analysis
+↓
+Linear Regression
+↓
+Normal Equation
+↓
+Gradient Descent
+↓
+Predictions
+↓
+Residuals
+↓
+MSE / RMSE / MAE / R²
+↓
+Model Comparison
+↓
+Business Interpretation
+```
+
+---
+
+## Expected Main Result
+
+Both training methods should produce very similar or identical coefficients when they are applied to the same training data.
+
+The comparison script should report approximately:
+
+```text
+Predicted Expenses = 1216.99 + 400.61 × BMI
+Test R² = 0.0226
+Test RMSE = $11,359.08
+```
+
+The comparison chart will be saved to:
+
+```text
+data/model_comparison_bmi_expenses.png
+```
+
+---
+
+## Troubleshooting
+
+### Error: ModuleNotFoundError
+
+Example:
+
+```text
+ModuleNotFoundError: No module named 'pandas'
+```
+
+Make sure the virtual environment is activated.
+
+Then reinstall the required packages.
+
+Windows:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+macOS:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+---
+
+### PowerShell Says Scripts Are Disabled
+
+Run:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+Then:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+---
+
+### VS Code Uses the Wrong Python Interpreter
+
+Open the Command Palette.
+
+Windows:
+
+```text
+Ctrl + Shift + P
+```
+
+macOS:
+
+```text
+Command + Shift + P
+```
+
+Search for:
+
+```text
+Python: Select Interpreter
+```
+
+Choose the Python interpreter inside `.venv`.
+
+---
+
+### Jupyter Notebook Does Not Run
+
+Open:
+
+```text
+linear_regression_lab.ipynb
+```
+
+Click:
+
+```text
+Select Kernel
+```
+
+Choose the `.venv` Python environment.
+
+---
+
+### Git Command Is Not Recognized
+
+Close and reopen Visual Studio Code after installing Git.
+
+Then run:
+
+```bash
+git --version
+```
+
+If a Git version appears, try the clone command again.
+
+---
+
+## Challenges and Lessons Learned
+
+This project reinforced several practical machine learning lessons.
+
+A model can be mathematically correct while still having limited predictive power.
+
+Successful optimization and strong prediction are not the same thing.
+
+Gradient Descent requires additional choices such as feature scaling, learning rate, and number of epochs.
+
+The Normal Equation calculates the coefficients directly without iterative updates.
+
+Another important lesson is reproducibility. An analytics project is more useful when another person can download the repository, recreate the environment, and reproduce the analysis without assistance.
+
+Technical results should also be translated into language that non-technical stakeholders can understand.
+
+---
+
+## Future Improvements
+
+Future extensions could include:
+
+- Add age as a predictor
+- Add smoking status
+- Add region
+- Compare single-feature and multi-feature regression
+- Introduce train, validation, and test splits
+- Compare additional learning rates
+- Add early stopping
+- Explore additional regression methods
+
+---
+
+## Reproducibility and Peer Validation
+
+This repository is designed so that another user can reproduce the project by following only the instructions in this README.
+
+The setup instructions support both Windows and macOS.
+
+For the course assignment, a peer will independently test these instructions without assistance from the project author.
+
+Any problems discovered during peer validation will be used to improve the documentation.
+
+---
+
+## Data Source
+
+The project uses the insurance premium prediction dataset provided with the course instructional materials.
+
+The dataset was originally sourced from Kaggle for educational use.
+
+---
+
+## Acknowledgment
+
+This project was developed as part of MSBA 265 coursework and builds upon instructional materials provided by the course instructor.
+
+The instructional code and concepts were extended, tested, documented, and interpreted as a reproducible portfolio project.
+
+The purpose of this repository is to demonstrate understanding of:
+
+- linear regression
+- Normal Equation
+- Gradient Descent
+- model evaluation
+- reproducible analytics workflows
+- technical communication
+
+---
+
+## Author
+
+Fangqi Hu
+
+MS Business Analytics  
+University of the Pacific
