@@ -136,6 +136,37 @@ The model performs slightly better than a simple mean-prediction baseline, but i
 
 Additional predictors such as age, smoking status, and region may improve model performance.
 
+## Two-Feature Extension: BMI + Age
+
+This project was extended from a one-feature BMI model to a two-feature model using BMI and age.
+
+The extended model is:
+
+```text
+expenses = w0 + w1*bmi + w2*age
+```
+
+Both the Normal Equation and Gradient Descent produced nearly identical coefficients:
+
+- Intercept (w0): -6437.35
+- BMI coefficient (w1): 333.39
+- Age coefficient (w2): 241.90
+- R²: 0.1173
+
+The BMI-only baseline had an R² of 0.0394, so adding age improved explanatory power by about 7.78 percentage points.
+
+The detailed comparison results are exported to:
+
+```text
+reports/assignment_results.csv
+```
+
+The written interpretation is available in:
+
+```text
+analysis_memo.md
+```
+
 ---
 
 ## Key Analytical Takeaways
